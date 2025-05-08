@@ -1,0 +1,5 @@
+torch>=2.0
+transformers>=4.30
+sentence-transformers>=2.2
+pyserini>=0.22  # For sparse retrieval
+faiss-cpu  # For dense similarity search
