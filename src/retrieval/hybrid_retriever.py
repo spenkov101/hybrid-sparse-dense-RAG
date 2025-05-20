@@ -1,5 +1,5 @@
 from transformers import AutoModelForMaskedLM, AutoTokenizer
-from sentence_transformers import SentenceTransformer  # <-- Add this import
+from sentence_transformers import SentenceTransformer  
 import numpy as np
 from typing import List
 import torch
