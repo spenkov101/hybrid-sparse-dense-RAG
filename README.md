@@ -23,4 +23,8 @@ A state-of-the-art retrieval system combining SPLADE's sparse lexical retrieval 
 
 1. Install dependencies:
 ```bash
+
 pip install -r requirements.txt
+
+pip install -r requirements.txt# Hybrid Sparse-Dense RAG
+
