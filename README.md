@@ -1,66 +1,76 @@
-markdown
 # Hybrid Sparse-Dense RAG
 
-A retrieval-augmented system that fuses sparse (SPLADE) and dense (Contriever) embeddings for improved passage retrieval.
+A proof-of-concept retrieval-augmented system that fuses sparse (SPLADE) and dense (Contriever) embeddings for improved passage retrieval.
 
 ## Project Structure
+
+```
 src/retrieval/
-├── splade.py # SPLADE wrapper with splade_embed()
-├── dense.py # Contriever wrapper with dense_embed()
+├── splade.py           # SPLADE wrapper with splade_embed()
+├── dense.py            # Contriever wrapper with dense_embed()
 ├── hybrid_retriever.py # Combines sparse & dense scores via alpha
 └── notebooks/
-└── demo.ipynb # Interactive usage examples
+    └── demo.ipynb      # Interactive usage examples
 
-evaluation/
-├── beir_metrics/ # Standardized evaluation
-│ └── evaluator.py # ir_measures wrapper
-└── evaluation.py # Main evaluation pipeline
-
+README.md
+requirements.txt
+```
 
 ## Installation
 
 1. Clone the repo:
+
    ```bash
    git clone https://github.com/spenkov101/hybrid-sparse-dense-RAG.git
    cd hybrid-sparse-dense-RAG
-Install dependencies:
+   ```
+2. Install dependencies:
 
-bash
-pip install -r requirements.txt
-pip install ir_measures  # For evaluation metrics
-Set Python path:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Ensure `src` is on your PYTHONPATH:
 
-bash
-export PYTHONPATH=$PWD/src  # Linux/Mac
-$env:PYTHONPATH = "$PWD/src"  # PowerShell
-Usage
-Basic Retrieval
-python
+   ```bash
+   export PYTHONPATH=$PWD/src
+   ```
+
+   *(Windows PowerShell: `$env:PYTHONPATH = "$PWD/src"`)*
+
+## Usage
+
+### SPLADE Embeddings
+
+```python
+from retrieval.splade import SpladeRetriever
+retriever = SpladeRetriever()
+emb = retriever.splade_embed("Paris is the capital of France")
+```
+
+### Dense Embeddings (Contriever)
+
+```python
+from retrieval.dense import DenseRetriever
+retriever = DenseRetriever()
+emb = retriever.dense_embed("Paris is the capital of France")
+```
+
+### Hybrid Search
+
+```python
 from retrieval.hybrid_retriever import HybridRetriever
 retriever = HybridRetriever()
-passages = ["Paris is...", "Berlin is..."]
-results = retriever.hybrid_search("French capital?", passages, alpha=0.5)
-Evaluation
-python
-from evaluation import run_beir_evaluation
+passages = ["Paris is the capital of France", "Berlin is the capital of Germany"]
+results = retriever.hybrid_search("What is the French capital?", passages, alpha=0.5)
+print(results)
+```
 
-# qrels = {qid: {docid: relevance}}  # Ground truth
-# results = {qid: {docid: score}}    # Your retriever output
-metrics = run_beir_evaluation(qrels, results)  # Returns nDCG@10, P@5, Recall@100
-Supported Metrics:
+## Future Work
 
-nDCG@[k]: Rank-aware accuracy
+* **Evaluation**: Add BEIR-based evaluation scripts using `ir_measures` or `pytrec_eval` to compare sparse, dense, and hybrid performance.
+* **Quantization**: Export Contriever to ONNX and quantize for low-latency inference.
+* **Demo**: Build a Gradio/Streamlit UI for interactive querying.
 
-P@[k]: Precision at k documents
+## License
 
-Recall@[k]: Recall at k documents
-
-Future Work
-Quantization: Export Contriever to ONNX for low-latency inference
-
-Demo: Build Gradio/Streamlit UI
-
-Expanded Metrics: Add MRR@10 and MAP@100
-
-License
 MIT
