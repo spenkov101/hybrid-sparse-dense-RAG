@@ -1,3 +1,4 @@
+markdown
 # Hybrid Sparse-Dense RAG
 
 A retrieval-augmented system that fuses sparse (SPLADE) and dense (Contriever) embeddings for improved passage retrieval.
@@ -22,30 +23,30 @@ evaluation/
    ```bash
    git clone https://github.com/spenkov101/hybrid-sparse-dense-RAG.git
    cd hybrid-sparse-dense-RAG
-2. Install dependencies:
+Install dependencies:
 
+bash
 pip install -r requirements.txt
 pip install ir_measures  # For evaluation metrics
+Set Python path:
 
-3. Set Python path:
+bash
 export PYTHONPATH=$PWD/src  # Linux/Mac
 $env:PYTHONPATH = "$PWD/src"  # PowerShell
-
 Usage
 Basic Retrieval
-
+python
 from retrieval.hybrid_retriever import HybridRetriever
 retriever = HybridRetriever()
 passages = ["Paris is...", "Berlin is..."]
 results = retriever.hybrid_search("French capital?", passages, alpha=0.5)
-
 Evaluation
+python
 from evaluation import run_beir_evaluation
 
 # qrels = {qid: {docid: relevance}}  # Ground truth
 # results = {qid: {docid: score}}    # Your retriever output
 metrics = run_beir_evaluation(qrels, results)  # Returns nDCG@10, P@5, Recall@100
-
 Supported Metrics:
 
 nDCG@[k]: Rank-aware accuracy
