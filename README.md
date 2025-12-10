@@ -1,50 +1,83 @@
-# Hybrid Sparse-Dense RAG
+# 🔍 Hybrid Sparse–Dense RAG
 
-A proof-of-concept retrieval-augmented system that fuses sparse (SPLADE) and dense (Contriever) embeddings for improved passage retrieval.
+**A retrieval-augmented system that fuses sparse (SPLADE) and dense (Contriever) embeddings**  
+to improve relevance and robustness in passage retrieval.
 
-## Project Structure
+This project demonstrates **hybrid retrieval scoring** where:
+- SPLADE → captures lexical relevance (exact terms, sparse vectors)
+- Contriever → captures semantic similarity (dense vectors)
+- Hybrid fusion → balances precision & semantic generalization
+
+> Goal: Practical experiments toward **hybrid ranking** in RAG pipelines.
+
+---
+
+## 📂 Project Structure
 
 ```
 src/retrieval/
-├── splade.py           # SPLADE wrapper with splade_embed()
-├── dense.py            # Contriever wrapper with dense_embed()
-├── hybrid_retriever.py # Combines sparse & dense scores via alpha
-└── notebooks/
-    └── demo.ipynb      # Interactive usage examples
+├── splade.py            # SPLADE wrapper (sparse_embed)
+├── dense.py             # Contriever wrapper (dense_embed)
+├── hybrid_retriever.py  # Weighted fusion of sparse+dense scores
+└── example_run.py       # Minimal demo script
+
+notebooks/
+└── demo.ipynb           # Interactive usage examples
 
 README.md
 requirements.txt
 ```
 
-## Installation
+---
 
-1. Clone the repo:
+## 🚀 Quick Start
 
-   ```bash
-   git clone https://github.com/spenkov101/hybrid-sparse-dense-RAG.git
-   cd hybrid-sparse-dense-RAG
-   ```
-2. Install dependencies:
+Clone & install:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Ensure `src` is on your PYTHONPATH:
+```bash
+git clone https://github.com/spenkov101/hybrid-sparse-dense-RAG.git
+cd hybrid-sparse-dense-RAG
+pip install -r requirements.txt
+```
 
-   ```bash
-   export PYTHONPATH=$PWD/src
-   ```
+Ensure `src` is visible to Python:
 
-   *(Windows PowerShell: `$env:PYTHONPATH = "$PWD/src"`)*
+```bash
+export PYTHONPATH=$PWD/src
+```
 
-## Usage
+Windows PowerShell:
+```powershell
+$env:PYTHONPATH = "$PWD/src"
+```
+
+---
+
+## ▶️ Minimal Example
+
+Run the test script:
+
+```bash
+python src/retrieval/example_run.py
+```
+
+Example output:
+
+```
+Query: What is the French capital?
+Top-1: Paris is the capital of France  (score=...)
+```
+
+---
+
+## 🧠 Usage in Code
 
 ### SPLADE Embeddings
 
 ```python
 from retrieval.splade import SpladeRetriever
 retriever = SpladeRetriever()
-emb = retriever.splade_embed("Paris is the capital of France")
+emb = retriever.sparse_embed("Paris is the capital of France")
 ```
 
 ### Dense Embeddings (Contriever)
@@ -59,18 +92,29 @@ emb = retriever.dense_embed("Paris is the capital of France")
 
 ```python
 from retrieval.hybrid_retriever import HybridRetriever
-retriever = HybridRetriever()
-passages = ["Paris is the capital of France", "Berlin is the capital of Germany"]
-results = retriever.hybrid_search("What is the French capital?", passages, alpha=0.5)
+retriever = HybridRetriever(alpha=0.5)
+
+passages = [
+    "Paris is the capital of France",
+    "Berlin is the capital of Germany",
+]
+
+results = retriever.search("What is the French capital?", passages)
 print(results)
 ```
 
-## Future Work
+---
 
-* **Evaluation**: Add BEIR-based evaluation scripts using `ir_measures` or `pytrec_eval` to compare sparse, dense, and hybrid performance.
-* **Quantization**: Export Contriever to ONNX and quantize for low-latency inference.
-* **Demo**: Build a Gradio/Streamlit UI for interactive querying.
+## 🧪 Coming Soon
 
-## License
+| Feature | Status |
+|--------|:-----:|
+| BEIR-based evaluation (MAP / nDCG / Recall) | ⏳ |
+| ONNX export + quantization | ⏳ |
+| Gradio/Streamlit UI demo | ⏳ |
 
-MIT
+---
+
+## 📜 License
+
+MIT License
