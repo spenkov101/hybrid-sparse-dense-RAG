@@ -11,6 +11,12 @@ This project demonstrates **hybrid retrieval scoring** where:
 > Goal: Practical experiments toward **hybrid ranking** in RAG pipelines.
 
 ---
+## 📐 Architecture
+
+A high-level overview of the hybrid sparse–dense retrieval pipeline  
+(including SPLADE, Contriever, and fusion logic):
+
+➡️ **[Architecture Overview](docs/architecture.md)**
 
 ## 📂 Project Structure
 
