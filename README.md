@@ -111,6 +111,31 @@ print(results)
 
 ---
 
+---
+
+## 📊 Evaluation
+
+This project includes **BEIR-style evaluation utilities** based on
+[`ir_measures`](https://github.com/terrierteam/ir_measures).
+
+The evaluation pipeline supports standard IR metrics such as:
+
+- nDCG@k
+- MAP@k
+- Precision@k
+- Recall@k
+
+Evaluation helpers are implemented in:
+
+src/evaluation/
+├── evaluation.py
+└── beir_metrics/
+└── evaluator.py
+
+This allows direct comparison between **sparse**, **dense**, and **hybrid**
+retrieval strategies on benchmark datasets.
+
+
 ## 🧪 Coming Soon
 
 | Feature | Status |
