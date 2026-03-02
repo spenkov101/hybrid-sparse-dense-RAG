@@ -82,3 +82,25 @@ def retrieval_difference(dense_results, sparse_results, top_k: int = 10):
         "dense_only": dense_ids - sparse_ids,
         "sparse_only": sparse_ids - dense_ids,
     }
+
+def contains_relevant(results, relevant_doc_ids, top_k: int = 10):
+    """
+    Check whether any relevant document appears in top-k results.
+
+    Parameters
+    ----------
+    results : list[dict]
+    relevant_doc_ids : set or list
+    top_k : int
+
+    Returns
+    -------
+    bool
+    """
+    retrieved = {
+        r["doc_id"]
+        for r in results[:top_k]
+        if "doc_id" in r
+    }
+
+    return any(doc_id in retrieved for doc_id in relevant_doc_ids)
