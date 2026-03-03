@@ -16,7 +16,9 @@ def pretty_print_results(results, top_k: int = 5):
 
     for i, r in enumerate(results[:top_k], start=1):
         print(f"[{i}] Doc ID: {r.get('doc_id')}")
-        print(f"Score : {r.get('score'):.4f}")
+        score = r.get("score")
+        score_str = f"{score:.4f}" if isinstance(score, (int, float)) else "N/A"
+        print(f"Score : {score_str}")
         text = r.get("text", "")
         print(f"Text  : {text[:200]}...")
         print("-" * 50)
