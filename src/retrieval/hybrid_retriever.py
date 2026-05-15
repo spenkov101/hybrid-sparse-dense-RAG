@@ -2,6 +2,7 @@ from transformers import AutoModelForMaskedLM, AutoTokenizer
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import torch
+from typing import List
 
 class HybridRetriever:
     def __init__(self):
