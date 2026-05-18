@@ -145,7 +145,13 @@ retrieval strategies on benchmark datasets.
 | Gradio/Streamlit UI demo | ⏳ |
 
 ---
+## Quick Retrieval Sanity Check
 
+A lightweight notebook is available for inspecting hybrid retrieval outputs:
+
+```bash
+notebooks/retrieval_sanity_check.ipynb
+```
 ## 📜 License
 
 MIT License
