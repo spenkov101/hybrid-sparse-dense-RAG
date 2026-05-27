@@ -19,7 +19,7 @@ class HybridRetriever:
     def dense_embed(self, text: str) -> np.ndarray:
         return self.dense_model.encode(text)
     
-    def hybrid_search(self, query: str, passages: List[str], alpha: float = 0.5) -> List[dict]:
+    def hybrid_search(self, query: str, passages: List[str], alpha: float = 0.5, top_k: int| None = None) -> List[dict]:
         sparse_embs = torch.stack([self.splade_embed(p) for p in passages])
         dense_embs = np.stack([self.dense_embed(p) for p in passages])
         
@@ -32,6 +32,9 @@ class HybridRetriever:
         
         combined = alpha * sparse_scores + (1-alpha) * dense_scores
         ranked = combined.argsort()[::-1]
+
+        if top_k is not None:
+            ranked = ranked[:top_k]
         
         return [{
             "text": passages[i],
