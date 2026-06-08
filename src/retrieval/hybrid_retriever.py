@@ -32,7 +32,9 @@ class HybridRetriever:
         
         combined = alpha * sparse_scores + (1-alpha) * dense_scores
         ranked = combined.argsort()[::-1]
-
+        
+        if top_k is not None and top_k <= 0:
+            raise ValueError("top_k must be greater than 0")
         if top_k is not None:
             ranked = ranked[:top_k]
         
