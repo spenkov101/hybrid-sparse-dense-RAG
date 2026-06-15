@@ -4,6 +4,8 @@ import numpy as np
 import torch
 from typing import List
 
+from .result_types import RetrievalResult
+
 class HybridRetriever:
     def __init__(self):
         self.splade_tokenizer = AutoTokenizer.from_pretrained("naver/splade-cocondenser-ensembledistil")
@@ -19,7 +21,7 @@ class HybridRetriever:
     def dense_embed(self, text: str) -> np.ndarray:
         return self.dense_model.encode(text)
     
-    def hybrid_search(self, query: str, passages: List[str], alpha: float = 0.5, top_k: int| None = None) -> List[dict]:
+    def hybrid_search(self, query: str, passages: List[str], alpha: float = 0.5, top_k: int| None = None) -> List[RetrievalResult]:
         sparse_embs = torch.stack([self.splade_embed(p) for p in passages])
         dense_embs = np.stack([self.dense_embed(p) for p in passages])
         
