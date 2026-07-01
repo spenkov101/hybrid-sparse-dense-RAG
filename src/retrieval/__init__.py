@@ -20,5 +20,6 @@ __all__ = [
     "SpladeRetriever",
     "HybridRetriever",
     "default_search_config",
+    "create_search_config",
     "get_top_result"
 ]
