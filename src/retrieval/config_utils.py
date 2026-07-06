@@ -22,4 +22,7 @@ def create_search_config(
 
 
 def default_search_config() -> SearchConfig:
+    """
+    Create a default retrieval configuration.
+    """
     return create_search_config()
