@@ -7,12 +7,14 @@ Exports:
 - SpladeRetriever
 - HybridRetriever
 - default_search_config
+- create_search_config
+- get_top_result
 """
 
 from .dense import DenseRetriever
 from .splade import SpladeRetriever
 from .hybrid_retriever import HybridRetriever
-from .config_utils import default_search_config
+from .config_utils import default_search_config, create_search_config
 from .result_utils import get_top_result
 
 __all__ = [
@@ -21,5 +23,5 @@ __all__ = [
     "HybridRetriever",
     "default_search_config",
     "create_search_config",
-    "get_top_result"
+    "get_top_result",
 ]
