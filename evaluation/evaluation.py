@@ -1,24 +1,41 @@
-"""
-High-level evaluation interface for hybrid/dense/sparse retrieval.
+"""Evaluate sparse, dense, and hybrid retrieval results."""
 
-This module wraps BEIR-style evaluation using ir_measures.
-Use `run_beir_evaluation` inside experiments to compute
-nDCG, MAP, Recall, Precision, etc.
-"""
-
-from evaluation.beir_metrics.evaluator import evaluate
+import ir_measures
+from ir_measures import P, Recall, nDCG
 
 
-def run_beir_evaluation(qrels, results, metrics=None):
+DEFAULT_METRICS = (
+    nDCG @ 10,
+    P @ 5,
+    Recall @ 100,
+)
+
+
+def evaluate(qrels: dict, results: dict, metrics=None) -> dict:
     """
-    Run BEIR/IR-style evaluation over ranked retrieval results.
+    Evaluate ranked retrieval results.
 
-    Args:
-        qrels (dict): Ground truth relevance judgments.
-        results (dict): Retrieved documents with scores.
-        metrics (list, optional): List of metrics (default inside evaluator).
+    :param qrels: Ground-truth relevance judgments.
+    :param results: Retrieved documents and their scores.
+    :param metrics: Optional metrics to compute.
+    :return: Aggregate scores keyed by metric.
+    """
+    selected_metrics = DEFAULT_METRICS if metrics is None else metrics
 
-    Returns:
-        dict: Aggregate evaluation scores.
+    return ir_measures.calc_aggregate(
+        selected_metrics,
+        qrels,
+        results,
+    )
+
+
+def run_beir_evaluation(qrels: dict, results: dict, metrics=None) -> dict:
+    """
+    Run evaluation through the high-level repository interface.
+
+    :param qrels: Ground-truth relevance judgments.
+    :param results: Retrieved documents and their scores.
+    :param metrics: Optional metrics to compute.
+    :return: Aggregate scores keyed by metric.
     """
     return evaluate(qrels, results, metrics)

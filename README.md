@@ -150,10 +150,9 @@ The evaluation pipeline supports standard information-retrieval metrics such as:
 Evaluation helpers are implemented in:
 
 ```text
-src/evaluation/
+evaluation/
 ├── evaluation.py
-└── beir_metrics/
-    └── evaluator.py
+└── result_types.py
 ```
 
 These utilities support comparisons between **sparse**, **dense**, and **hybrid** retrieval strategies on benchmark datasets.

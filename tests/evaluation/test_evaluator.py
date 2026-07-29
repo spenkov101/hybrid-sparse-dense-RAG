@@ -1,7 +1,6 @@
 from ir_measures import P, Recall, nDCG
 
-from evaluation.beir_metrics.evaluator import DEFAULT_METRICS, evaluate
-
+from evaluation.evaluation import DEFAULT_METRICS, evaluate
 
 def test_default_metrics_are_explicit() -> None:
     assert DEFAULT_METRICS == (
