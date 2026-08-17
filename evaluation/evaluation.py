@@ -1,4 +1,4 @@
-"""Evaluate sparse, dense, and hybrid retrieval results."""
+"""Provide evaluation utilities for retrieval experiments."""
 
 import ir_measures
 from ir_measures import P, Recall, nDCG
@@ -11,14 +11,18 @@ DEFAULT_METRICS = (
 )
 
 
-def evaluate(qrels: dict, results: dict, metrics=None) -> dict:
+def evaluate(
+    qrels: dict,
+    results: dict,
+    metrics=None,
+) -> dict:
     """
     Evaluate ranked retrieval results.
 
     :param qrels: Ground-truth relevance judgments.
     :param results: Retrieved documents and their scores.
     :param metrics: Optional metrics to compute.
-    :return: Aggregate scores keyed by metric.
+    :return: Aggregate evaluation scores keyed by metric.
     """
     selected_metrics = DEFAULT_METRICS if metrics is None else metrics
 
@@ -29,13 +33,17 @@ def evaluate(qrels: dict, results: dict, metrics=None) -> dict:
     )
 
 
-def run_beir_evaluation(qrels: dict, results: dict, metrics=None) -> dict:
+def run_beir_evaluation(
+    qrels: dict,
+    results: dict,
+    metrics=None,
+) -> dict:
     """
-    Run evaluation through the high-level repository interface.
+    Run retrieval evaluation through the high-level interface.
 
     :param qrels: Ground-truth relevance judgments.
     :param results: Retrieved documents and their scores.
     :param metrics: Optional metrics to compute.
-    :return: Aggregate scores keyed by metric.
+    :return: Aggregate evaluation scores keyed by metric.
     """
     return evaluate(qrels, results, metrics)
