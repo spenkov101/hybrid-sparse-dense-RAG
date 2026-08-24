@@ -152,7 +152,6 @@ Evaluation helpers are implemented in:
 ```text
 evaluation/
 ├── evaluation.py
-└── result_types.py
 ```
 
 These utilities support comparisons between **sparse**, **dense**, and **hybrid** retrieval strategies on benchmark datasets.
