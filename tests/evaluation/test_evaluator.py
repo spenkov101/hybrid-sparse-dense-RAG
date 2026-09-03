@@ -1,6 +1,7 @@
 from ir_measures import P, Recall, nDCG
 
 from evaluation.evaluation import DEFAULT_METRICS, evaluate
+from evaluation.evaluation import serialize_evaluation_results
 
 def test_default_metrics_are_explicit() -> None:
     assert DEFAULT_METRICS == (
@@ -47,4 +48,19 @@ def test_evaluate_accepts_custom_metrics() -> None:
 
     assert scores == {
         metric: 1.0,
+    }
+
+def test_serialize_evaluation_results() -> None:
+    scores = {
+        nDCG @ 10: 1.0,
+        P @ 5: 0.2,
+        Recall @ 100: 1.0,
+    }
+
+    serialized = serialize_evaluation_results(scores)
+
+    assert serialized == {
+        "nDCG@10": 1.0,
+        "P@5": 0.2,
+        "R@100": 1.0,
     }

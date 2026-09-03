@@ -47,3 +47,15 @@ def run_beir_evaluation(
     :return: Aggregate evaluation scores keyed by metric.
     """
     return evaluate(qrels, results, metrics)
+
+def serialize_evaluation_results(scores: dict) -> dict[str, float]:
+    """
+    Convert evaluation results to a serializable dictionary.
+
+    :param scores: Evaluation scores keyed by metric objects.
+    :return: Evaluation scores keyed by metric names.
+    """
+    return {
+        str(metric): float(score)
+        for metric, score in scores.items()
+    }
